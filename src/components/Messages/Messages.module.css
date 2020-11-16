@@ -1,0 +1,21 @@
+.content{
+    display: flex;
+    background-color: rosybrown;
+}
+
+.users{
+    padding: 30px;
+}
+
+.messages{
+    padding: 30px;
+}
+
+.avatar{
+    width: 40px;
+    border-radius: 50%;
+}
+
+.message{
+    padding-top: 24px;
+}

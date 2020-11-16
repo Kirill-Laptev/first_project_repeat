@@ -1,0 +1,11 @@
+img {
+    width: 700px;
+}
+
+.user img{
+    width: 50px;
+}
+
+.profile {
+    background-color: skyblue;
+}
