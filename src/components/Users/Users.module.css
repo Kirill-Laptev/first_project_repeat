@@ -1,8 +1,11 @@
 .avatar {
     width: 50px;
-    border-radius: 50%;
 }
 
 .users{
     padding-top: 20px;
+}
+
+.current{
+    font-weight: bold;
 }
