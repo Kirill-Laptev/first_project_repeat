@@ -9,3 +9,7 @@
 .current{
     font-weight: bold;
 }
+
+.preloader img{
+    width: 50px;
+}

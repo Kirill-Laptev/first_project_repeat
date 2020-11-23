@@ -3,12 +3,14 @@ const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const SET_LOADING_PRELOADER = 'SET_LOADING_PRELOADER';
 
 let initialState = {
     users: [],
     totalUsersCount: 0,
     pageSize: 5,
     currentPage: 1,
+    isLoading: false,
 }
 
 
@@ -60,6 +62,12 @@ const usersReducer = (state = initialState, action) => {
                 totalUsersCount: action.totalCount,
             }
 
+        case SET_LOADING_PRELOADER :
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }    
+
         default: 
         return state;    
     }
@@ -85,5 +93,10 @@ export const setCurrentPage = (pageNumber) => {
 export const setTotalUsersCount = (totalCount) => {
     return {type: SET_TOTAL_USERS_COUNT, totalCount: totalCount}
 }
+
+export const setLoadingPreloader = (isLoading) => {
+    return {type: SET_LOADING_PRELOADER, isLoading: isLoading}
+}
+
 
 export default usersReducer;

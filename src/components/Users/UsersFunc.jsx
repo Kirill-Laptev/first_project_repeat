@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Users.module.css';
 import userAvatar from '../../temp/image/userAvatar.png';
+import Preloader from '../common/Preloader';
 
 const UsersFunc = (props) => {
 
@@ -15,7 +16,8 @@ const UsersFunc = (props) => {
 
 
     return (
-        <div>
+        <div>    
+         <div className={styles.preloader}>{props.isLoading ? <Preloader /> : ''}</div>  
         <div>{pagesArray.map((page) => {   // Отрисовка страниц
             return <span onClick={() => props.onPageChanged(page)} 
             className={props.currentPage === page ? styles.current : ''}>{page + ' '}</span>
