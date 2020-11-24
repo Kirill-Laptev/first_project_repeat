@@ -3,9 +3,9 @@ import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import {Route} from 'react-router-dom';
-import Profile from './components/Profile/Profile';
 import MessagesContainer from './components/Messages/MessagesContainer';
 import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 
 
@@ -16,7 +16,7 @@ import UsersContainer from './components/Users/UsersContainer';
           <Header />
           <div className="content_wrapper">
             <Navbar />
-            <Route path='/profile' render={ () => <Profile />} />
+            <Route path='/profile/:userID?' render={ () => <ProfileContainer />} />
             <Route path='/messages' render={ () => <MessagesContainer />} />
             <Route path='/users' render={ () => <UsersContainer />} />
           </div>

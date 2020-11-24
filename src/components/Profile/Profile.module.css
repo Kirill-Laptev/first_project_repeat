@@ -9,3 +9,11 @@ img {
 .profile {
     background-color: skyblue;
 }
+
+.profileAvatar{
+    width: 300px;
+}
+
+.preloader img{
+    width: 50px;
+}

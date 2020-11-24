@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Users.module.css';
 import userAvatar from '../../temp/image/userAvatar.png';
 import Preloader from '../common/Preloader';
+import { NavLink } from 'react-router-dom';
 
 const UsersFunc = (props) => {
 
@@ -24,7 +25,11 @@ const UsersFunc = (props) => {
         })}</div>
         <div>{props.users.map((user) => {  // Отрисовка пришедших пользователей из сервера в state
             return <div className={styles.users}>
-                <div><img className={styles.avatar} src={user.photos.small ? user.photos.small : userAvatar}/></div>
+                <div>
+                    <NavLink to={'/profile/' + user.id}>
+                    <img className={styles.avatar} src={user.photos.small ? user.photos.small : userAvatar}/>
+                    </NavLink>
+                    </div>
                 <div>{user.name}</div>
                 <div>user.country</div>
                 <div>user.city</div>
