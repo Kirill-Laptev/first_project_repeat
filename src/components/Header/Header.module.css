@@ -1,8 +1,14 @@
 .header{
     background-color: olivedrab;
     flex: 1;
+    display: flex;
+    justify-content: space-between;
 }
 
 .header img{
     width: 60px;
+}
+
+.login{
+    float: right;
 }
