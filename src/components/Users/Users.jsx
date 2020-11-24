@@ -4,8 +4,9 @@ import userAvatar from '../../temp/image/userAvatar.png';
 import Preloader from '../common/Preloader';
 import { NavLink } from 'react-router-dom';
 import * as axios from 'axios';
+import UsersAPI from '../../api/api';
 
-const UsersFunc = (props) => {
+const Users = (props) => {
 
 
     let pages = Math.ceil(props.totalUsersCount/props.pageSize);
@@ -37,11 +38,7 @@ const UsersFunc = (props) => {
                 <div>user.country</div>
                 <div>user.city</div>
                 <div>{user.followed ? <button onClick={() => {
-                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
-                    {withCredentials: true,
-                    headers: {
-                        'API-KEY': '1e60f3eb-a2f7-4f18-b8e9-f6ea4b15f04b'
-                    }})
+                    UsersAPI.unfollowRequest(user.id)
                     .then((response) => {
                         if(response.data.resultCode === 0){
                             props.unfollow(user.id)
@@ -49,11 +46,7 @@ const UsersFunc = (props) => {
                     })
                 }}>Unfollow</button>:
                 <button onClick={() => {
-                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {},
-                    {withCredentials: true,
-                    headers: {
-                        'API-KEY': '1e60f3eb-a2f7-4f18-b8e9-f6ea4b15f04b'
-                    }})
+                    UsersAPI.followRequest(user.id)
                     .then((response) => {
                         if(response.data.resultCode === 0){
                             props.follow(user.id)
@@ -66,4 +59,4 @@ const UsersFunc = (props) => {
     )
 }
 
-export default UsersFunc;
+export default Users;

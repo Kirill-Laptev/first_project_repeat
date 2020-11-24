@@ -1,17 +1,16 @@
 import React from 'react';
 import styles from './Users.module.css';
-import * as axios from 'axios';
-import UsersFunc from './UsersFunc';
+import Users from './Users';
 import { connect } from 'react-redux';
 import { setUsers, follow, unfollow, setCurrentPage, setTotalUsersCount, setLoadingPreloader} from '../../redux/usersReducer';
+import UsersAPI from '../../api/api';
 
 class UsersContainer extends React.Component {
 
 
     componentDidMount() {
         this.props.setLoadingPreloader(true);
-        axios.get('https://social-network.samuraijs.com/api/1.0/users',
-        {withCredentials: true})
+        UsersAPI.getUsers(this.props.currentPage, this.props.pageSize)
         .then((response) => {
             this.props.setLoadingPreloader(false);
             this.props.setUsers(response.data.items);
@@ -22,8 +21,7 @@ class UsersContainer extends React.Component {
     onPageChanged = (page) => {
         this.props.setLoadingPreloader(true);
         this.props.setCurrentPage(page);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
-        {withCredentials: true})
+        UsersAPI.getUsers(page, this.props.pageSize)
         .then((response) => {
             this.props.setLoadingPreloader(false);
             this.props.setUsers(response.data.items);
@@ -32,7 +30,7 @@ class UsersContainer extends React.Component {
   
 
     render(){
-        return <UsersFunc
+        return <Users
         totalUsersCount={this.props.totalUsersCount}
         pageSize={this.props.pageSize} 
         onPageChanged={this.onPageChanged}
