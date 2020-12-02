@@ -3,8 +3,7 @@ import styles from './Users.module.css';
 import userAvatar from '../../temp/image/userAvatar.png';
 import Preloader from '../common/Preloader';
 import { NavLink } from 'react-router-dom';
-import * as axios from 'axios';
-import UsersAPI from '../../api/api';
+
 
 const Users = (props) => {
 
@@ -37,21 +36,15 @@ const Users = (props) => {
                 <div>{user.name}</div>
                 <div>user.country</div>
                 <div>user.city</div>
-                <div>{user.followed ? <button onClick={() => {
-                    UsersAPI.unfollowRequest(user.id)
-                    .then((response) => {
-                        if(response.data.resultCode === 0){
-                            props.unfollow(user.id)
-                        }
-                    })
-                }}>Unfollow</button>:
-                <button onClick={() => {
-                    UsersAPI.followRequest(user.id)
-                    .then((response) => {
-                        if(response.data.resultCode === 0){
-                            props.follow(user.id)
-                        }
-                    }) 
+                <div>{user.followed 
+                ? <button 
+                    disabled={user.id === props.buttonID ? true : ''} 
+                    onClick={() => {
+                        props.unfollow(user.id)
+                }}>Unfollow</button>
+                :<button disabled={user.id === props.buttonID ? true : ''}
+                 onClick={() => {
+                        props.follow(user.id);
                 }}>Follow</button>}</div>
             </div>
         })}</div>

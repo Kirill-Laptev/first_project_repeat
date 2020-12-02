@@ -1,3 +1,5 @@
+import { AuthAPI } from "../api/api";
+
 const SET_AUTH_DATA = 'SET_AUTH_DATA';
 
 let initialState = {
@@ -25,6 +27,22 @@ const authReducer = (state = initialState, action) => {
 export const setAuthData = (id, login, email) => {
     return {type: SET_AUTH_DATA, data: {id: id, login: login, email: email}}
 }
+
+
+//================================= Thunk'и
+
+export const authUser = () => {
+  return (dispatch) => {
+    AuthAPI.authMe()
+    .then((response) => {
+      if (response.data.resultCode === 0) {
+        let { id, login, email } = response.data.data;
+        dispatch(setAuthData(id, login, email));
+      }
+    })
+  }
+}
+
 
 
 export default authReducer;

@@ -2,30 +2,21 @@ import React from 'react';
 import styles from './Users.module.css';
 import Users from './Users';
 import { connect } from 'react-redux';
-import { setUsers, follow, unfollow, setCurrentPage, setTotalUsersCount, setLoadingPreloader} from '../../redux/usersReducer';
-import UsersAPI from '../../api/api';
+import { setUsers, setCurrentPage, setTotalUsersCount, 
+         setPreloader, loadingOnClick, getUsersTC, 
+         getUsersOnChangeTC, unfollowTC, followTC} from '../../redux/usersReducer';
+
+         
 
 class UsersContainer extends React.Component {
 
 
     componentDidMount() {
-        this.props.setLoadingPreloader(true);
-        UsersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-        .then((response) => {
-            this.props.setLoadingPreloader(false);
-            this.props.setUsers(response.data.items);
-            this.props.setTotalUsersCount(response.data.totalCount);
-        })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (page) => {
-        this.props.setLoadingPreloader(true);
-        this.props.setCurrentPage(page);
-        UsersAPI.getUsers(page, this.props.pageSize)
-        .then((response) => {
-            this.props.setLoadingPreloader(false);
-            this.props.setUsers(response.data.items);
-        })
+        this.props.getUsersOnChange(page, this.props.pageSize)
     }
   
 
@@ -36,9 +27,11 @@ class UsersContainer extends React.Component {
         onPageChanged={this.onPageChanged}
         currentPage={this.props.currentPage}
         users={this.props.users}
+        isLoading={this.props.isLoading}
+        loadingOnClick={this.props.loadingOnClick} 
+        buttonID={this.props.buttonID}
         unfollow={this.props.unfollow}
-        follow={this.props.follow} 
-        isLoading={this.props.isLoading} /> 
+        follow={this.props.follow} /> 
     }
 }   
 
@@ -49,7 +42,9 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
-        isLoading: state.usersPage.isLoading,
+        isLoadingPreloader: state.usersPage.isLoadingPreloader,
+        loadingOnClick: state.usersPage.loadingOnClick,
+        buttonID: state.usersPage.buttonID,
     }
 }
 
@@ -57,10 +52,13 @@ let mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     setUsers,
-    follow,
-    unfollow,
     setCurrentPage,
     setTotalUsersCount,
-    setLoadingPreloader,
+    setPreloader,
+    loadingOnClick,
+    getUsers: getUsersTC,
+    getUsersOnChange: getUsersOnChangeTC,
+    unfollow: unfollowTC,
+    follow: followTC,
 })(UsersContainer);
 
