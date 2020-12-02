@@ -1,7 +1,14 @@
 import React from 'react';
 import style from './Messages.module.css';
+import { Redirect } from 'react-router-dom';
+
 
 const Messages = (props) => {
+
+    if(!props.isAuth){
+        return <Redirect to={'/login'} />
+    }
+
 
     let newText = React.createRef();
 
