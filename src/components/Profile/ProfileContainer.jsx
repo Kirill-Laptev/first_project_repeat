@@ -5,6 +5,7 @@ import * as axios from 'axios';
 import {getUserProfileTC} from '../../redux/profileReducer'
 import { withRouter, Redirect } from 'react-router-dom';
 import withAuthRedirect from '../hoc/withAuthRedirectFull';
+import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
 
@@ -34,10 +35,10 @@ const mapStateToProps = (state) => {
 }
 
 
+export default compose(
+    connect(mapStateToProps,{
+        getUserProfile: getUserProfileTC}),
+    withAuthRedirect,
+    withRouter,
+)(ProfileContainer)
 
-let UrlDataContainerComponent = withRouter(ProfileContainer);  // Оборачиваем в обертку для получения url
-
-let withAuthRedirectComponent = withAuthRedirect(UrlDataContainerComponent)
-
-export default connect(mapStateToProps,{
-    getUserProfile: getUserProfileTC})(withAuthRedirectComponent)
