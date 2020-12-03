@@ -3,6 +3,7 @@ import { ProfileAPI } from "../api/api";
 const UPDATE_PROFILE_NEWPOSTTEXT = 'UPDATE_PROFILE_NEWPOSTTEXT ';
 const PROFILE_ADD_POST = 'PROFILE_ADD_POST';
 const SET_PROFILE_USER = 'SET_PROFILE_USER';
+const SET_STATUS = 'SET_STATUS';
 
 let initialState = {
     postsData: [
@@ -12,6 +13,7 @@ let initialState = {
     ],
     newPostText: '',
     userProfile: null,
+    status: '',
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -34,6 +36,12 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 userProfile: action.userProfile
             }
+
+        case SET_STATUS :
+            return {
+                ...state,
+                status: action.status
+            }
             
             default: 
             return state;
@@ -55,6 +63,11 @@ export const setProfileUser = (userProfile) => {
     return {type: SET_PROFILE_USER, userProfile: userProfile}
 }
 
+const setStatus = (status) => {
+    return {type: SET_STATUS, status}
+}
+
+
 
 
 // ===================================== Thunk'и
@@ -68,6 +81,26 @@ export const getUserProfileTC = (userID) => {
     }
 }
 
+export const getUserStatusTC = (userID) => {
+    return (dispatch) => {
+        ProfileAPI.getStatus(userID)
+        .then((response) => {
+            dispatch(setStatus(response.data))
+        })
+    }
+}
+
+
+export const updateUserStatusTC = (status) => {
+    return (dispatch) => {
+        ProfileAPI.setUserStatus(status)
+        .then((response) => {
+            if(response.data.resultCode === 0){
+                dispatch(setStatus(status))
+            }
+        })
+    }
+}
 
 
 export default profileReducer;

@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import * as axios from 'axios';
-import {getUserProfileTC} from '../../redux/profileReducer'
-import { withRouter, Redirect } from 'react-router-dom';
+import {getUserProfileTC, getUserStatusTC, updateUserStatusTC} from '../../redux/profileReducer'
+import {withRouter} from 'react-router-dom';
 import withAuthRedirect from '../hoc/withAuthRedirectFull';
 import { compose } from 'redux';
 
@@ -14,15 +13,18 @@ class ProfileContainer extends React.Component {
         let userID = this.props.match.params.userID;  
         
         if(!userID){   // Делаем условие, что если приходит undefined в userID (когда мы кликаем на свою страницу), то передаем номер своего профиля
-            userID = 2;
+            userID = 12705;
         }
 
         this.props.getUserProfile(userID);
+        this.props.getUserStatus(userID);
     }
 
 
     render() {
-        return <Profile userProfile={this.props.userProfile} />
+        return <Profile userProfile={this.props.userProfile} 
+                        status={this.props.status}
+                        updateUserStatus={this.props.updateUserStatus}/>
     }
 }
 
@@ -31,13 +33,16 @@ class ProfileContainer extends React.Component {
 const mapStateToProps = (state) => {
    return {
        userProfile: state.profilePage.userProfile,
+       status: state.profilePage.status
    }
 }
 
 
 export default compose(
     connect(mapStateToProps,{
-        getUserProfile: getUserProfileTC}),
+        getUserProfile: getUserProfileTC,
+        getUserStatus: getUserStatusTC,
+        updateUserStatus: updateUserStatusTC}),
     withAuthRedirect,
     withRouter,
 )(ProfileContainer)
