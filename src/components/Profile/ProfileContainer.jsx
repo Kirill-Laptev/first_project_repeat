@@ -20,6 +20,10 @@ class ProfileContainer extends React.Component {
         this.props.getUserStatus(userID);
     }
 
+    // componentDidMount() {
+        
+    // }
+
 
     render() {
         return <Profile userProfile={this.props.userProfile} 
@@ -43,7 +47,7 @@ export default compose(
         getUserProfile: getUserProfileTC,
         getUserStatus: getUserStatusTC,
         updateUserStatus: updateUserStatusTC}),
-    withAuthRedirect,
+    // withAuthRedirect,
     withRouter,
 )(ProfileContainer)
 
